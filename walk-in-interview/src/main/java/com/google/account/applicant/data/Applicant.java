@@ -1,4 +1,4 @@
-package com.google.account.applicant;
+package com.google.account.applicant.data;
 
 import com.google.common.collect.ImmutableList;
 

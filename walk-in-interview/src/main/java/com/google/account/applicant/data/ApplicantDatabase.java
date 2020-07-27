@@ -1,4 +1,4 @@
-package com.google.account.applicant;
+package com.google.account.applicant.data;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -7,6 +7,7 @@ import com.google.utils.FireStoreUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /** Helps persist and retrieve applicant accounts. */
 public final class ApplicantDatabase {
@@ -18,9 +19,10 @@ public final class ApplicantDatabase {
      * @param applicantId Id for the target applicant in the database.
      * @param jobId Id for the target job post in the database.
      * @param interest Current interest status of the user towards that job post.
+     * @return A future.
      * @throws IllegalArgumentException If the applicant id or job id is invalid.
      */
-    public void toggleInterestStatus(String applicantId, String jobId, Boolean interest)
+    public Future<Void> toggleInterestStatus(String applicantId, String jobId, Boolean interest)
             throws IllegalArgumentException, IOException {
         if (applicantId.isEmpty()) {
             throw new IllegalArgumentException("Applicant Id should be an non-empty string");
@@ -54,5 +56,7 @@ public final class ApplicantDatabase {
 
             return null;
         });
+
+        return futureTransaction;
     }
 }
