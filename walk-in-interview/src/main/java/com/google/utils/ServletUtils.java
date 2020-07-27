@@ -103,6 +103,21 @@ public final class ServletUtils {
     }
 
     /**
+     * @return the value of parameter with the {@code name} in the {@code request}
+     *         or returns {@code defaultValue} if that parameter does not exist.
+     */
+    public static Boolean getBooleanParameter(HttpServletRequest request, String parameterName, Boolean defaultValue) {
+        String resultStr = request.getParameter(parameterName).trim();
+
+        try {
+            return Boolean.parseBoolean(resultStr);
+        } catch (NumberFormatException e) {
+            // TODO(issue/12): error handling; can consider to add logging to log the error
+            return defaultValue;
+        }
+    }
+
+    /**
      * Converts the target item into json format.
      *
      * @param item Target item.

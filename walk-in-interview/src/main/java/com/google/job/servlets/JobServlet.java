@@ -168,7 +168,7 @@ public final class JobServlet extends HttpServlet {
      * @return the job id.
      * @throws IllegalArgumentException if the job id is invalid.
      */
-    public static String parseJobId(HttpServletRequest request) throws IllegalArgumentException {
+    private String parseJobId(HttpServletRequest request) throws IllegalArgumentException {
         String jobIdStr = ServletUtils.getStringParameter(request, JOB_ID_FIELD, /* defaultValue= */ "");
 
         if (jobIdStr.isEmpty()) {

@@ -22,6 +22,14 @@ function getJobId() {
   return 'Not Implemented';
 }
 
+/**
+ * Gets interest status of the current applicant towards the current job post.
+ */
+// TODO(issue/71): implement this function
+function getCurrentInterestStatus() {
+  return false;
+}
+
 const interestButton = document.getElementById('interest');
 interestButton.addEventListener('click', (_) => {
   const jobId = getJobId();
@@ -31,6 +39,10 @@ interestButton.addEventListener('click', (_) => {
       /* msg= */ COMMON_STRINGS['empty-job-id-error-message'], /* includesDefault= */false);
     return;
   }
+
+  const params = new URLSearchParams();
+  params.append("jobId", jobId);
+  params.append("interested", getCurrentInterestStatus());
 
   fetch(API['mark-job-as-interested'], {
     method: 'POST',
