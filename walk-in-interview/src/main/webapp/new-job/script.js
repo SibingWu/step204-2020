@@ -14,15 +14,12 @@ const CurrentLocale = 'en';
 import {AppStrings} from '../strings.en.js';
 import {API} from '../apis.js';
 
-import {getRequirementsList, setErrorMessage, renderSelectOptions} from '../common-functions.js';
+import {getRequirementsList, setErrorMessage,
+  renderSelectOptions} from '../common-functions.js';
 
 const STRINGS = AppStrings['job'];
 const NEW_JOB_STRINGS = AppStrings['new-job'];
 const HOMEPAGE_PATH = '../index.html';
-const HOURS_PER_YEAR = 8760;
-/* Note that is an approximate value */
-const WEEKS_PER_YEAR = 52;
-const MONTHS_PER_YEAR = 12;
 
 /**
  * Note that this is needed because in JS we can hold bigger Integer

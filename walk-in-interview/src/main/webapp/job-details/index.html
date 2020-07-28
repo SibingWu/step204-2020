@@ -7,52 +7,56 @@
 </head>
 
 <body>
-    <!--TODO(issue/59): render this page dynamically-->
     <div class="header-container">
-        <button onclick="location.href='../index.html'">Back to Homepage</button>
+        <button id="back-to-homepage"></button>
 
         <!--Add a button for applicant to mark interest-->
         <!--TODO: render text dynamically-->
         <button id="interest">Interested</button>
 
         <!--Add a button for update-->
-        <input type="submit" id="update" value="Update">
+        <form id="update-form">
+            <input id="job-id">
+            <input class="button" id="update">
+        </form>
 
         <!--Add a button for delete-->
-        <!--TODO(issue/53): gets the job Id-->
         <button id="delete"></button>
     </div>
     <div class="content-container">
+        <!-- TODO(issue/42): need to implement maps api -->
         <div id="jobpage-map">map here</div>
-        <div class="job-field" id="job-address">Job Address</div>
-        <div class="job-field" id="job-title">Job Title</div>
-        <p class="job-field" id="job-description">Job description here....</p>
+        <div class="job-field" id="job-title"></div>
+        <div class="job-field" id="address"></div>
+        <p class="job-field" id="description"></p>
 
-        <div>Requirements:</div>
-        <ul class="job-field" id="job-requirements">
-            <li id="o-level">O Levels</li>
-            <li id="drivers-license">Driver's License</li>
-        </ul>
+        <div id="requirements-title"></div>
+        <ul class="job-field" id="requirements-list"></ul>
 
         <div class="job-field" style="display:flex;">
-            Job Pay:
-            <div id="job-pay-min">$6</div>
+            <div id="pay-title"></div>
+            <div id="pay-min"></div>
             -
-            <div id="job-pay-max">$10</div>
-            <div id="job-pay-paymentFrequency">(Hourly)</div>
+            <div id="pay-max"></div>
+            <div id="pay-frequency"></div>
         </div>
 
         <div class="job-field" style="display:flex;">
-            Job Duration:
-            <div id="job-duration">Not Specified</div>
+            <div id="duration-title"></div>
+            <div id="duration"></div>
         </div>
 
         <div class="error-message" id="error-message"></div>
+
+        <!-- hidden div to be used as a template to render requirements list elements -->
+        <!-- template used for now incase we want to add more to this later -->
+        <div hidden>
+            <li id="requirement-element-template"></li>
+        </div>
 
     </div>
 </body>
 
 <script type="module" src="./script.js"></script>
-<script type="module" src="../delete-job/script.js"></script>
 
 </html>

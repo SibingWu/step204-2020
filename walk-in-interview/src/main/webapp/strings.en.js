@@ -42,9 +42,12 @@ AppStrings['homepage'] = {
   'filter-max-limit': 'max (annual pay for salary)',
   'filters-submit': 'Apply Filters',
   'job-listings-title': 'Job Listings:',
+  'details': 'Show Details',
   'job-listings-showing': 'out of',
   'no-jobs-error-message': 'There are no jobs to display at the moment.',
   'get-jobs-error-message': 'An error occured while getting the job listings.',
+  'job-details-error-message': 'An error occured while getting ' +
+    'the details of this job.',
 };
 
 /**
@@ -86,8 +89,8 @@ AppStrings['job'] = {
 AppStrings['new-job'] = {
   'page-title': 'New Job Post',
   'submit': 'Create',
-  'error-message': 
-    'There was an error while creating the job listing, please try submitting again',
+  'error-message': 'There was an error while creating ' +
+    'the job listing, please try submitting again',
 };
 
 /**
@@ -96,9 +99,9 @@ AppStrings['new-job'] = {
 AppStrings['update-job'] = {
   'page-title': 'Update Job Post',
   'update': 'Update',
-  'error-message': 
+  'error-message':
     'There was an error while loading the job post. Please try again',
-  'storing-error-message': 
+  'storing-error-message':
     'There was an error while storing the job post. Please try again',
 }
 
@@ -115,6 +118,17 @@ AppStrings['delete-job'] = {
  * Strings used in job-details.
  */
 AppStrings['job-details'] = {
+  'back-to-homepage': 'Back To Homepage',
+  'update': 'Update',
+  'delete': 'Delete',
+  'error-message': 'There was an error while getting ' +
+    'the job post. Please try again',
+  'error-message':
+    'There was an error while deleting the job post. Please try again',
+  'update-error-message': 'Error occur when directing to update page',
+  'delete-error-message': 'There was an error while deleting ' +
+    'the job post. Please try again',
+
   'mark-interest': 'Interested',
   'update-error-message': 'Error occur when directing to update page',
   'mark-interest-error-message': 'Error occur when marking this job post as interested',

@@ -12,10 +12,12 @@ const CurrentLocale = 'en';
  * TODO(issue/22): figure out how to use dynamic imports
  */
 import {AppStrings} from './strings.en.js';
-import {getRequirementsList} from './common-functions.js';
+import {getRequirementsList, JOB_ID_PARAM,
+  setErrorMessage} from './common-functions.js';
 
 const STRINGS = AppStrings['homepage'];
 const JOBPAGE_PATH = '/new-job/index.html';
+const JOB_DETAILS_PATH = '/job-details/index.html';
 const SALARY_PARAM = 'SALARY';
 
 /**
@@ -76,18 +78,8 @@ function renderHomepageElements() {
   loadAndDisplayJobListings();
 
   /* reset the error to make sure no error msg initially present */
-  setErrorMessage(/* msg= */ '', /* includesDefaultMsg= */ false);
-}
-
-/**
- * Sets the error message according to the param.
- * @param {String} msg the message that the error div should display.
- * @param {boolean} includesDefaultMsg whether the default
- *    message should be included.
- */
-function setErrorMessage(msg, includesDefaultMsg) {
-  document.getElementById('error-message').innerText =
-    (includesDefaultMsg ? STRINGS['error-message'] + msg : msg);
+  setErrorMessage(/* errorMessageElementId= */ 'error-message',
+      /* msg= */ '', /* includesDefaultMsg= */ false);
 }
 
 /**
@@ -129,7 +121,8 @@ function validateFilters(sortByParam, showByParam,
   /* If the field has been filled out, we check that it's a positive int */
   if (!Number.isNaN(minLimitParam) &&
     (minLimitParam > JAVA_INTEGER_MAX_VALUE || minLimitParam < 0)) {
-    setErrorMessage(/* msg= */ STRINGS['filter-min-limit'],
+    setErrorMessage(/* errorMessageElementId= */ 'error-message',
+        /* msg= */ STRINGS['filter-min-limit'],
         /* includesDefaultMsg= */ true);
     document.getElementById('filter-min-limit').classList.add('error-field');
     return false;
@@ -138,7 +131,8 @@ function validateFilters(sortByParam, showByParam,
   /* If the field has been filled out, we check that it's a positive int */
   if (!Number.isNaN(maxLimitParam) &&
     (maxLimitParam > JAVA_INTEGER_MAX_VALUE || maxLimitParam < 0)) {
-    setErrorMessage(/* msg= */ STRINGS['filter-max-limit'],
+    setErrorMessage(/* errorMessageElementId= */ 'error-message',
+        /* msg= */ STRINGS['filter-max-limit'],
         /* includesDefaultMsg= */ true);
     document.getElementById('filter-max-limit').classList.add('error-field');
     return false;
@@ -147,7 +141,8 @@ function validateFilters(sortByParam, showByParam,
   /* If both fields have been filled out, we check that max >= min */
   if (!Number.isNaN(maxLimitParam) && !Number.isNaN(minLimitParam) &&
     maxLimitParam < minLimitParam) {
-    setErrorMessage(/* msg= */ STRINGS['filter-max-limit'],
+    setErrorMessage(/* errorMessageElementId= */ 'error-message',
+        /* msg= */ STRINGS['filter-max-limit'],
         /* includesDefaultMsg= */ true);
     document.getElementById('filter-max-limit').classList.add('error-field');
     return false;
@@ -187,7 +182,8 @@ function displayJobListings(jobPageData) {
   if (jobPageData === undefined ||
     !jobPageData.hasOwnProperty('jobList') ||
     jobPageData['jobList'].length === 0) {
-    setErrorMessage(/* msg= */ STRINGS['no-jobs-error-message'],
+    setErrorMessage(/* errorMessageElementId= */ 'error-message',
+        /* msg= */ STRINGS['no-jobs-error-message'],
         /* includesDefaultMsg= */ false);
     return;
   }
@@ -238,6 +234,23 @@ function buildJobElement(job) {
   requirementsList.innerText =
   `Requirements List: ${requirementsArr.join(', ')}`;
 
+  const detailsForm = jobListing.children[4];
+  detailsForm.method = 'GET';
+  detailsForm.action = JOB_DETAILS_PATH;
+
+  const jobIdElement = jobListing.children[4].children[0];
+  jobIdElement.setAttribute('type', 'hidden');
+  jobIdElement.setAttribute('name', JOB_ID_PARAM);
+  const jobId = job[JOB_ID_PARAM];
+  jobIdElement.setAttribute('value', jobId);
+
+  jobListing.addEventListener('click', (_) => {
+    if (jobId === '') {
+      throw new Error('jobId should not be empty');
+    }
+    detailsForm.submit();
+  });
+
   return jobListing;
 }
 
@@ -283,7 +296,8 @@ async function loadAndDisplayJobListings() {
       DEFAULT_PAGE_SIZE, DEFAULT_PAGE_INDEX)
       .catch((error) => {
         console.error('error fetching job listings', error);
-        setErrorMessage(/* msg= */ STRINGS['get-jobs-error-message'],
+        setErrorMessage(/* errorMessageElementId= */ 'error-message',
+            /* msg= */ STRINGS['get-jobs-error-message'],
             /* include default msg= */ false);
       });
 
@@ -314,7 +328,8 @@ function getJobListings(region, sortBy, minLimit, maxLimit,
       .then((data) => {
         console.log('data', data);
         /* reset the error (there might have been an error msg from earlier) */
-        setErrorMessage(/* msg= */ '', /* includesDefaultMsg= */ false);
+        setErrorMessage(/* errorMessageElementId= */ 'error-message',
+            /* msg= */ '', /* includesDefaultMsg= */ false);
         return data;
       });
 }
