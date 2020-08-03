@@ -2,6 +2,17 @@ body {
     margin: 30px;
 }
 
+.log-in-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;

@@ -1,5 +1,5 @@
 /**
- * This file is specific to account/applicant-account.html. 
+ * This file is specific to account/applicant/index.html. 
  * It renders the fields on the page dynamically.
  */
 
@@ -10,9 +10,11 @@ const CurrentLocale = 'en';
  * Import statements are static so its parameters cannot be dynamic.
  * TODO(issue/22): figure out how to use dynamic imports
  */
-import {AppStrings} from '../strings.en.js';
+import {AppStrings} from '../../strings.en.js';
+import {APPLICANT_ID_PARAM, APPLICANT_DETAILS_PARAM} from '../../common-functions.js';
 
-const HOMEPAGE_PATH = '../index.html';
+const HOMEPAGE_PATH = '../../index.html';
+const EDIT_ACCOUNT_PATH = './edit/index.html';
 const STRINGS = AppStrings['applicant'];
 
 window.onload = () => {
@@ -23,7 +25,7 @@ window.onload = () => {
 /** Gets the ID of this account. */
 function getId() {
   // TODO
-  return 'xxxxx';
+  return 'Not Implemented';
 }
 
 /**
@@ -32,14 +34,33 @@ function getId() {
  * @param {String} accountId Id of this account.
  */
 function renderPageElements(accountId) {
+  var accountDetails = getAccountDetails(accountId);
+
   const backButton = document.getElementById('back');
   backButton.innerText = STRINGS['back'];
 
+  const editForm = document.getElementById('edit-form');
+  editForm.method = 'GET';
+  editForm.action = EDIT_ACCOUNT_PATH;
+
+  const applicantIdElement = document.getElementById('applicant-id');
+  applicantIdElement.setAttribute('type', 'hidden');
+  applicantIdElement.setAttribute('name', APPLICANT_ID_PARAM);
+  applicantIdElement.setAttribute('value', accountId);
+
+  const applicantDetailElement = document.getElementById('applicant-details');
+  applicantDetailElement.setAttribute('type', 'hidden');
+  applicantDetailElement.setAttribute('name', APPLICANT_DETAILS_PARAM);
+  applicantDetailElement.setAttribute('value', JSON.stringify(accountDetails));
+
   const editButton = document.getElementById('edit');
-  editButton.innerText = STRINGS['edit'];
+  editButton.setAttribute('value', STRINGS['edit']);
+  editButton.setAttribute('type', 'submit');
+  // in case it was disabled earlier
+  editButton.disabled = false;
 
-  var accountDetails = getAccountDetails(accountId);
-
+  const nameLabel = document.getElementById('name-label');
+  nameLabel.innerText = STRINGS['name'];
   const name = document.getElementById('name');
   name.innerText = accountDetails.name;
 
@@ -56,11 +77,13 @@ function renderPageElements(accountId) {
  * @returns Detail json.
  */
 function getAccountDetails(accountId) {
+  const applicantId = getId();
   let accountDetails = {
+    accountId: applicantId,
     name: 'test',
     skills: [
-      'test1',
-      'test2',
+      'O Level',
+      'English',
     ],
   };
 
@@ -94,9 +117,4 @@ function renderSkills(skills) {
 const backButton = document.getElementById('back');
 backButton.addEventListener('click', (_) => {
   window.location.href = HOMEPAGE_PATH;
-});
-
-const editButton = document.getElementById('edit');
-editButton.addEventListener('click', (_) => {
-
 });

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../../../style.css">
+  </head>
+
+  <body>
+    <div class="header-container">
+      <button id="back"></button>
+      <input id="submit">
+    </div>
+
+    <div class="content-container">
+      <ul>
+        <li>
+          <label id="name-label" for="name"></label>
+          <input id="name" name="name">
+        </li>
+
+        <li>
+          <label for="skills-title"></label>
+          <div id="skills-title" name="skills-title"></div>
+          <ul id="skills"></ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="error-message" id="error-message"></div>
+
+    <!-- template for skill list -->
+    <div hidden>
+      <li id="skill-element-template">
+          <input type="checkbox">
+          <label></label>
+      </li>
+    </div>
+  </body>
+
+  <script type="module" src="./script.js"></script>
+</html>

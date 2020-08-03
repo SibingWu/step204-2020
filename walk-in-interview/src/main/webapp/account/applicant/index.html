@@ -3,19 +3,24 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../../style.css">
   </head>
 
   <body>
     <div class="header-container">
       <button id="back"></button>
-      <button id="edit"></button>
+      
+      <form id="edit-form">
+        <input id="applicant-id">
+        <input id="applicant-details">
+        <input class="button" id="edit">
+      </form>
     </div>
 
     <div class="content-container">
       <ul>
         <li>
-          <label for="name"></label>
+          <label id="name-label" for="name"></label>
           <div id="name" name="name"></div>
         </li>
 
@@ -35,5 +40,5 @@
     </div>
   </body>
 
-  <script type="module" src="./applicant-account.js"></script>
+  <script type="module" src="./script.js"></script>
 </html>

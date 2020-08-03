@@ -23,6 +23,7 @@ AppStrings['homepage'] = {
   'page-title': 'Find Walk-in Interviews',
   'new-post': 'New Post',
   'account': 'Create an Account',
+  'log-in': 'Log In',
   'sort-by-title': 'Sort By',
   'sort-by': {
     'SALARY-DESCENDING': 'Salary (high to low)',
@@ -48,6 +49,33 @@ AppStrings['homepage'] = {
   'get-jobs-error-message': 'An error occured while getting the job listings.',
   'job-details-error-message': 'An error occured while getting ' +
     'the details of this job.',
+};
+
+/**
+ * All the strings to be used in the log-in/index.html.
+ */
+AppStrings['log-in'] = {
+  'applicant-log-in': 'Log in as an Applicant',
+  'business-log-in': 'Log in as a Business',
+  'back': 'Back',
+  'submit': 'Submit',
+};
+
+/**
+ * All the strings to be used in the log-in/business/index.html.
+ */
+AppStrings['business-log-in'] = {
+  'account': 'Account (Email)',
+  'password': 'Password',
+};
+
+/**
+ * All the strings to be used in the log-in/applicant/index.html.
+ */
+AppStrings['applicant-log-in'] = {
+  'account': 'Account (Phone Number)',
+  'otp': 'OTP',
+  'otp-button': 'Send OTP',
 };
 
 /**
@@ -140,5 +168,17 @@ AppStrings['job-details'] = {
 AppStrings['applicant'] = {
   'back': 'Back to Homepage',
   'edit': 'Edit',
+  'submit': 'Submit',
+  'name': 'Name',
   'skills-title': 'Skills',
+  'error-message':
+    'There was an error while loading the applicant account details. Please try again',
+  'update-error-message': 'Error occur when updating applicant account',
+};
+
+/**
+ * Strings used in firebase-auth.
+ */
+AppStrings['auth'] = {
+  'sign-out-success': 'Signed Out Successfully',
 };

@@ -24,8 +24,7 @@
         <button id="delete"></button>
     </div>
     <div class="content-container">
-        <!-- TODO(issue/42): need to implement maps api -->
-        <div id="jobpage-map">map here</div>
+        <div id="jobpage-map"></div>
         <div class="job-field" id="job-title"></div>
         <div class="job-field" id="address"></div>
         <p class="job-field" id="description"></p>
@@ -58,5 +57,8 @@
 </body>
 
 <script type="module" src="./script.js"></script>
+<!-- TODO(issue/69): find a way to hide the api key -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXntH-1pvtC20SGfFhbzNPPagESHSR6E4&callback"
+  type="text/javascript"></script>
 
 </html>

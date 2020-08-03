@@ -16,8 +16,7 @@ import {API} from '../apis.js';
 
 import {JOB_ID_PARAM, setErrorMessage,
   getRequirementsList} from '../common-functions.js';
-
-import {API} from '../apis.js';
+import {createMap, addMarker, JOB_MAP_ZOOM} from '../maps.js';
 
 const UPDATE_JOB_PATH = '../update-job/index.html';
 const HOMEPAGE_PATH = '../index.html';
@@ -25,6 +24,8 @@ const HOMEPAGE_PATH = '../index.html';
 const COMMON_STRINGS = AppStrings['common'];
 const STRINGS = AppStrings['job-details'];
 const JOB_STRINGS = AppStrings['job'];
+
+let map;
 
 window.onload = () => {
   renderJobDetailsPageElements();
@@ -78,6 +79,10 @@ async function renderJobDetailsPageElements() {
         deleteButtonElement.disabled = true;
       });
 
+  const location = job['jobLocation'];
+  map = createMap('jobpage-map', location['latitude'], location['longitude'],
+      JOB_MAP_ZOOM);
+
   displayJobDetails(job);
 }
 
@@ -98,6 +103,9 @@ function displayJobDetails(job) {
   // in case they were disabled earlier
   document.getElementById('update').disabled = false;
   document.getElementById('delete').disabled = false;
+
+  // does not require info window
+  addMarker(map, job);
 
   const jobTitle = document.getElementById('job-title');
   jobTitle.innerText = job['jobTitle'];
@@ -140,14 +148,20 @@ function displayJobDetails(job) {
   const requirementsList = getRequirementsList();
   const requirementTemplate =
     document.getElementById('requirement-element-template');
-  job['requirements'].forEach((req) => {
-    const requirementElement = requirementTemplate
-        .cloneNode(/* and child elements */ true);
-    requirementElement.setAttribute('id', req);
-    requirementElement.innerText = requirementsList[req];
 
-    requirementsListElement.appendChild(requirementElement);
-  });
+  const jobRequirements = job['requirements'];
+  for (const key in jobRequirements) {
+    if (jobRequirements.hasOwnProperty(key)) {
+      if (jobRequirements[key] /* is true */) {
+        const requirementElement = requirementTemplate
+            .cloneNode(/* and child elements */ true);
+        requirementElement.setAttribute('id', key);
+        requirementElement.innerText = requirementsList[key];
+
+        requirementsListElement.appendChild(requirementElement);
+      }
+    }
+  }
 }
 
 /**
