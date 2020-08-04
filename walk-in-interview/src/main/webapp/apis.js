@@ -11,5 +11,8 @@ export const API = {
   'mark-job-as-interested': '/my-interested-list',
   'business-log-in': '/business-log-in',
   'applicant-log-in': '/applicant-log-in',
-  'update-applicant-account': 'TODO',
+  'update-applicant-account': '/applicant',
+  'update-business-account': '/business',
+  'get-applicant-account': '/applicant',
+  'get-business-account': '/business',
 };
