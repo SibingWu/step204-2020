@@ -43,11 +43,19 @@ const Auth = {};
  * @param {String} password The password for the new business account.
  */
 Auth.createBusinessAccount = (email, password) => {
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-      .catch((error) => {
-        console.error(error);
-      });
-  checkCurrentUser();
+  return firebase.auth().createUserWithEmailAndPassword(email, password);
+  //     .catch((error) => {
+  //       // Handle Errors here.
+  //       var errorCode = error.code;
+  //       var errorMessage = error.message;
+  //       if (errorCode == 'auth/weak-password') {
+  //         alert('The password is too weak.');
+  //       } else {
+  //         alert(errorMessage);
+  //       }
+  //       console.log(error);
+  //     });
+  // checkCurrentUser();
 };
 
 /**
@@ -55,7 +63,7 @@ Auth.createBusinessAccount = (email, password) => {
  *
  * @param {String} email The email for the exisiting business account.
  * @param {String} password The password for the existing business account.
- * @return {*} Returns the function that makes the POST request.
+ * @return {Promise} Returns the function that makes the POST request.
  */
 Auth.signIntoBusinessAccount = (email, password) => {
   return firebase.auth().signInWithEmailAndPassword(email, password)

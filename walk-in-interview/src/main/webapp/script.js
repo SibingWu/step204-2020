@@ -17,7 +17,8 @@ import {JOB_ID_PARAM, DEFAULT_PAGE_SIZE,
 import {createMap, addMarker} from './maps.js';
 
 const STRINGS = AppStrings['homepage'];
-const LOG_IN_PAGE_PATH = '/log-in/index.html';
+const CREATE_ACCOUNT_PAGE_PATH = '/account/create-account/index.html'
+const LOG_IN_PAGE_PATH = '/account/log-in/index.html';
 const JOBPAGE_PATH = '/new-job/index.html';
 const JOB_DETAILS_PATH = '/job-details/index.html';
 const POSTS_MADE_PATH = '/business-jobs-list/index.html';
@@ -51,6 +52,9 @@ function renderHomepageElements() {
 
   const accountButton = document.getElementById('account');
   accountButton.innerText = STRINGS['account'];
+  accountButton.addEventListener('click', (_) => {
+    window.location.href = CREATE_ACCOUNT_PAGE_PATH;
+  });
 
   const loginButton = document.getElementById('log-in');
   loginButton.innerText = STRINGS['log-in'];
