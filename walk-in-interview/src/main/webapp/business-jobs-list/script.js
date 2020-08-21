@@ -65,7 +65,7 @@ function getJobsMade(pageSize, pageIndex) {
   const pageSizeParam = parseInt(pageSize);
   const pageIndexParam = parseInt(pageIndex);
 
-  if (Number.isNaN(pageSizeParam) || Number.isNan(pageIndexParam)) {
+  if (Number.isNaN(pageSizeParam) || Number.isNaN(pageIndexParam)) {
     throw new Error('Illegal pagination param');
   }
 

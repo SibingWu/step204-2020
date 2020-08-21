@@ -30,12 +30,14 @@ public final class JobsDatabase {
 
     private static final String JOB_COLLECTION = "Jobs";
     private static final String APPLICANT_ACCOUNTS_COLLECTION = "ApplicantAccounts";
+    private static final String BUSINESS_ACCOUNT_COLLECTION = "BusinessAccounts";
 
     private static final String SALARY_FIELD = "jobPay.annualMax";
     private static final String REGION_FIELD = "jobLocation.region";
     private static final String JOB_STATUS_FIELD = "jobStatus";
     private static final String JOB_REQUIREMENTS_FIELD = "requirements";
     private static final String INTERESTED_JOBS_FIELD = "interestedJobs";
+    private static final String ALL_JOBS_FIELD = "jobs";
     private static final String JOB_ID_FIELD = "jobId";
     
     private static final long TIMEOUT_SECONDS = 5;
@@ -295,6 +297,42 @@ public final class JobsDatabase {
                 return new JobPage(jobList, totalCount, range);
             },
             MoreExecutors.directExecutor()
+        );
+    }
+
+    /**
+     * Fetches all the jobs post made by the specific business account.
+     *
+     * @param businessId Uid of the business account.
+     * @param pageSize The the number of jobs to be shown on the page.
+     * @param pageIndex The page number on which we are at.
+     * Returns future of the JobPage object.
+     * @throws IllegalArgumentException If it is not a valid existing uid for business account.
+     */
+    public Future<JobPage> fetchAllJobMadePage(String businessId, int pageSize, int pageIndex)
+            throws IOException, IllegalArgumentException {
+        CollectionReference businessAccountsCollection = FireStoreUtils.getFireStore()
+                .collection(BUSINESS_ACCOUNT_COLLECTION);
+
+        DocumentReference docRef = businessAccountsCollection.document(businessId);
+
+        return ApiFutures.transform(
+                docRef.get(),
+                documentSnapshot -> {
+                    if (!documentSnapshot.exists()) {
+                        throw new IllegalArgumentException("Invalid businessId");
+                    }
+
+                    List<String> jobs = (List<String>) documentSnapshot.get(ALL_JOBS_FIELD);
+
+                    List<Job> jobList = fetchAllJobsFromIds(jobs);
+                    // TODO(issue/34): adjust range/total count based on pagination
+                    long totalCount = jobList.size();
+                    Range<Integer> range = totalCount == 0 ? Range.between(0, 0) : Range.between(1, jobList.size());
+
+                    return new JobPage(jobList, totalCount, range);
+                },
+                MoreExecutors.directExecutor()
         );
     }
 
